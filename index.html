@@ -1,0 +1,77 @@
+<html ng-app="portfolioApp">
+  <head>
+
+    <script src="angular.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="app.css">
+
+  </head>
+  <body ng-controller="mainController as main">
+      <title>{{main.content.name + " Portfolio"}} </title>
+      <section ng-controller = "tabController as navigation">
+          <h1>{{main.content.name}}</h1>
+          <ul class = "nav nav-pills">
+              <li ng-class = "{ active: navigation.isSelected(1)}"> 
+                <a href ng-click = "navigation.selectTab(1)">About</a> 
+              </li>
+            <li ng-class = "{ active:navigation.isSelected(2) }"> 
+                <a href ng-click = "navigation.selectTab(2)">Portfolio</a>
+              </li> 
+            <li ng-class = "{ active:navigation.isSelected(3) }"> 
+                <a href ng-click = "navigation.selectTab(3)">Contact Me</a>
+              </li>
+          </ul>
+          <div class = "navigation container" ng-show="navigation.isSelected(1)">
+            
+            <p class = "col-md-8">{{main.content.description}}</p>
+            <img class = "col-md-4" ng-src="{{main.content.aboutImage}}">
+          </div>
+          <div class = "navigation container"  ng-show="navigation.isSelected(2)">
+              <li class = "thumbnail" ng-repeat="image in main.content.images"> 
+                  <img ng-src="{{image}}"/> 
+              </li>
+            </div>
+          <div ng-controller = "userController" class = "navigation container" ng-show="navigation.isSelected(3)" >
+            <form class = "col-md-8"  novalidate class="simple-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="name" class="form-control" ng-model="user.name">
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email address:</label>
+                    <input type="email" class="form-control" ng-model="user.email">
+                  </div>
+                   <div class="form-group">
+                    <label for="msg">Message:</label>
+                      <textarea rows="4" cols="50" type="msg" class="form-control" ng-model="user.msg"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary" ng-click="update(user)" >Submit</button>
+                  
+                    
+
+    
+            </form>
+            <ul class = col-md-4>
+                    <li>
+                        <span class="glyphicon glyphicon-map-marker"></span>
+                        <p>{{main.content.address}}</p></li>
+                    <li><span class="glyphicon glyphicon-earphone"></span>
+                        <p>{{main.content.phone}}</p></li>
+                    <li>
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        <p>{{main.content.email}}</p></li>
+                    
+
+            </ul>
+            
+             
+            </div>
+          
+        
+      </section>
+      
+  </body>
+</html>
