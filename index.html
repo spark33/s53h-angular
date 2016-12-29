@@ -1,16 +1,14 @@
 <!--
 
-PAIN IN THE FUCKING ASS:
--format mini-reserve on homepage
-
-INVESTIGATE:
--how to use angular to set up language support?
--how to pull in data from csv?
-
+TO-DO:
+-clean up code
+-update gimpo direction photos
+-USER TESTING
+  -proofread directions
 -->
 
 
-<html ng-app="hotelsiteApp">
+<html ng-app="hotelsiteApp" ng-controller="mainController">
   <head>
 
     <title>Seoul 53 Hotel</title> 
@@ -19,86 +17,195 @@ INVESTIGATE:
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="images/logo.ico" />
 
-
-    <!-- CSS !-->
-    <link rel="stylesheet" href="jquery-ui-1.12.1/jquery-ui.css">
-    <link rel="stylesheet" href="app.css">
-    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <style>
+      @font-face {
+        font-family: 'Oseong';
+        src: url(fonts/oseong.otf);
+      }
+    </style>
+
+    <!-- CSS STYLES !-->
+    <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.css">
+    <link rel="stylesheet" ng-href="styles/{{language}}-fonts.css">
+    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- JAVASCRIPT !-->
-    <script src="jquery-3.1.1.js"></script>
-    <script src="jquery-ui-1.12.1/jquery-ui.js"></script>
-    <script src="angular.min.js"></script>
-    <script src="bootstrap.min.js"></script>
-    <script src="app.js"></script>
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/jquery-ui-1.12.1/jquery-ui.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/app.js"></script>
+    <!-- THE MATERIALIZE FILE HAS BEEN ALTERED -->
+    <!-- DO NOT USE UPDATED MATERIALIZE -->
     <script type="text/javascript" src="materialize/js/materialize.js"></script>
-    <script type="text/javascript" src="moment.min.js"></script>
-    <script type="text/javascript" src="my-scripts.js"></script>  
+    <script type="text/javascript" src="js/moment.min.js"></script>
     <!-- IMAGE SLIDER, FORM & SCROLLER SCRIPTS -->
     <script>
       $(document).ready(function(){
           $('.slider').slider({full_width: true});
           $("#checkin").datepicker();
           $("#checkout").datepicker();
+          $("#home-checkin").datepicker();
+          $("#home-checkout").datepicker();
+          $('ul.tabs').tabs();
       });
       window.onscroll = function() {
-        changeScrollArrow(".heading-banner");
+        changeScrollArrow('.arrow-anchor');
       };
 
       /* makes room select button's height dynamic */
       var roomSelectButtonWidth = $('.room-select').width();
-      $('.room-select + label img').css({'height':roomSelectButtonWidth+'px'});
-      
+      $('.room-select + label img').css({'height':roomSelectButtonWidth+'px'});  
     </script>
   </head>
-  <body ng-app="hotelsiteApp" ng-controller="mainController">
-    <section ng-controller="tabController as navigation">
-
-      <div class="row container">
-        <form id="language-select">
-          <input type="radio" id="language1" value="english" ng-model="language" checked>
-          <label for="language1" ng-click="setLanguage('english')">English</label>
-          <input type="radio" id="language2" value="korean" ng-model="language" >
-          <label for="language2" ng-click="setLanguage('korean')">Korean</label>
-          <input type="radio" id="language3" value="japanese" ng-model="language" >
-          <label for="language3" ng-click="setLanguage('japanese')">Japanese</label>
-          <input type="radio" id="language4" value="chinese" ng-model="language" >
-          <label for="language4" ng-click="setLanguage('chinese')">Chinese</label>
-        </form>
-        <!--<pre>user = {{language}}</pre>-->
-      </div>
-      <div class="row container">
-        <ul class="tabs" id="navbar">
-          <li class="tab col s2" ng-class = "{ active: isSelected(1) }">
-            <a href ng-click = "selectTab(1)" >About</a>
-          </li>
-          <li class="tab col s2" ng-class = "{ active: isSelected(2) }">
-            <a href ng-click = "selectTab(2)">Explore</a>
-          </li>
-          <li class="tab col s2" ng-class = "{ active: isSelected(3) }">
-            <a href ng-click = "selectTab(3)">Rooms</a>
-          </li>
-          <li class="tab col s2" ng-class = "{ active: isSelected(4) }">
-            <a href ng-click = "selectTab(4)">Reserve</a>
-          </li>
-          <li class="tab col s2" ng-class = "{ active: isSelected(5) }">
-            <a href ng-click = "selectTab(5)">Find Us</a>
-          </li>
-        </ul>
-      </div>
-      <div id="mainContent">
+  <body>
       
-        <!-- ABOUT US -->
+      <!-- LANGUAGE SELECT BAR -->
+      <div id="language-div">
+        <div class="container right-align">
+          <a class="language-select-tab" onclick="setActive('english');" ng-click="setLanguage('english');">
+            <img src="images/flags/english.png" class="active" height="18px" width="30px" id="english"/>
+          </a>
+          <!--
+          <a class="language-select-tab" onclick="setActive('chinese')" ng-click="setLanguage('chinese')">
+            <img src="images/flags/chinese.png" height="18px" width="30px" id="chinese"/>
+          </a>  
+          <a class="language-select-tab" onclick="setActive('japanese')" ng-click="setLanguage('japanese')">
+            <img src="images/flags/japanese.png" height="18px" width="30px" id="japanese" />
+          </a>
+          -->
+          <a class="language-select-tab" onclick="setActive('korean');" ng-click="setLanguage('korean');">
+            <img src="images/flags/korean.png" height="18px" width="30px" id="korean"/>
+          </a>
+        </div>
+      </div>
+     
+      <!-- NAVIGATION BAR -->
+      <div id="toprow" class="row container">
+        <div class="col s5">
+          <a href ng-click="selectTab(0)" onclick="$('.nav-tabs').tabs('select_tab',0);">
+            <img id ="logo" src="images/logo3.png"/>
+          </a>
+        </div>
+        <div id="navbar" class="col s7">
+          <ul class="tabs nav-tabs">
+            <li class="tab col s1" ng-class = "{ active: isSelected(0) }">
+              <a id="home-button" href ng-click = "selectTab(0)" ng-class = "{ active: isSelected(0) }">
+                Home
+              </a>
+            </li>
+            <li class="tab col s1" ng-class = "{ active: isSelected(1) }">
+              <a id="about-nav-button" href ng-click = "selectTab(1)" ng-class = "{ active: isSelected(1) }">
+                About
+              </a>
+            </li>
+            <li class="tab col s1" ng-class = "{ active: isSelected(3) }">
+              <a id="rooms-nav-button" href ng-click = "selectTab(3)" ng-class = "{ active: isSelected(3) }">
+                Rooms
+              </a>
+            </li>
+            <li class="tab col s1" ng-class = "{ active: isSelected(4) }">
+              <a id="reserve-nav-button" href ng-click = "selectTab(4)" ng-class = "{ active: isSelected(4) }">
+                Reserve
+              </a>
+            </li>
+            <li class="tab col s1" ng-class = "{ active: isSelected(5) }">
+              <a id="find-us-nav-button" href ng-click = "selectTab(5)" ng-class = "{ active: isSelected(5) }">
+                Find Us
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div id="mainContent">
+
+        <!-- 0 - HOME -->
+        <div ng-show="isSelected(0)">
+          <!-- SCROLL BUTTON -->
+          <div class="center"><a id="scroll-button" onclick="goToByScroll('.arrow-anchor')" class="center btn-floating waves-effect waves-light">&darr;</a>
+          </div>
+          <div id="home">
+            <div class="row" id="home-header">
+                <h3 ng-cloak>
+                  {{content.home_header}}
+                </h3>
+                <br/><br/>
+            </div>
+            <div id="home-booker">
+              <form onsubmit="$('ul.tabs').tabs('select_tab', 4); goToByScroll('#reserve-form-div');">
+              <table>
+                  <td>
+                    <input type="text" ng-attr-placeholder={{content.checkin}} id="home-checkin" ng-model="reservation.checkin"/>
+                  </td>
+                  <td class="home-reserve-arrow">
+                    <h3>></h3>
+                  </td>
+                  <td colspan="2">
+                    <input type="text" ng-attr-placeholder={{content.checkout}} id="home-checkout" ng-model="reservation.checkout"/>
+                  </td>
+                  <td id="home-reserve">
+                    <input type="submit" class="btn" ng-value="content.reserve"/>
+                  </td>
+              </table>
+              </form>
+            </div>
+          </div>
+          <div id="image-gallery" class="arrow-anchor">
+            <div class="row" style="text-align: center; margin-top: 60px;">
+              <h3 ng-cloak>{{content.home_subheader}}</h3>
+            </div>
+            <br/>
+            <div class="row">
+              <div class="col s5">
+                <img class="materialboxed" width="100%" src="images/explore/dining3.jpg">
+                <p ng-cloak>{{content.home_dining_room_caption}}</p>
+                <br/>
+                <img class="materialboxed" width="100%" src="images/explore/outdoor2.jpg">
+                <p ng-cloak>{{content.home_outdoor_caption}}</p>
+              </div>
+              <div class="col s3">
+                <img class="materialboxed" width="100%" src="images/explore/lobby3.jpg">
+                <p ng-cloak>{{content.home_front_caption}}</p>
+                <img class="materialboxed" width="100%" src="images/explore/outdoor8.jpg" />
+                <br/>
+                <img class="materialboxed" width="100%" src="images/explore/other15.jpg">
+                <p ng-cloak>{{content.home_patio_caption}}</p>
+              </div>
+              <div class="col s4">
+                <img class="materialboxed" width="100%" src="images/explore/triple1.jpg">
+                <p ng-cloak>{{content.home_room_caption}}</p>
+                <br/><br/>
+                <img class="materialboxed" width="100%" src="images/explore/dining5.jpg">
+                <p ng-cloak>{{content.home_dining_room_caption2}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1 - ABOUT US -->
         <div ng-show="isSelected(1)">
           <div id="description" class="row container">
             <div id="about-us" class="col s6">
-              <h2>Welcome. 欢迎光临。</h2>
-              <h2>환영합니다. ようこそ.</h2>
-              <p> {{content.home_intro}} </p>
+              <h2>
+                <span style="font-family: 'Montserrat', sans-serif;">Welcome.</span>
+                <span style="font-family: 'Montserrat', sans-serif;">欢迎光临。</span>
+              </h2>
+              <h2>
+                <span style="font-family: 'Oseong', sans-serif;">환영합니다.</span>
+                <span style="font-family: 'Oseong', sans-serif;">ようこそ.</span>
+              </h2>
+              <br/>
+              <p ng-cloak> {{content.about_intro}} </p>
+              <br/>
+              <p><b style="font-family: 'Oseong', sans-serif;">감사합니다.</b></p>
             </div>
-            <div id="image-gallery" class="col s6">
+            <div id="about-image-gallery" class="col s6">
               <div class="slider">
                 <ul class="slides">
                   <li>
@@ -126,24 +233,55 @@ INVESTIGATE:
               </div>
             </div>
           </div>
-          <div class="center"><a id="scroll-button" onclick="goToByScroll('about-us-banner')" class="center btn-floating waves-effect waves-light">&darr;</a>
-          </div>
-          <div id="about-us-banner" class="heading-banner">
+          <div id="about-us-banner" class="heading-banner arrow-anchor">
             <br/><br/>
-            <h2 class="center">Entire city within fingertips.</h2>
+            <h2 class="center" ng-cloak >{{content.about_banner_header}}</h2>
             <br/><br/>
             <div class="center" id="lobby-descript">
-              <h5>Less than 10 minutes by walk 3 subway lines and 2 subway stations</h5>
+              <h5 ng-cloak >{{content.about_banner_subheader}}</h5>
             </div>
             <br/><br/><br/>
           </div>
           <br/>
           <h5 class="center">
-            <b>Seoul 53 Hotel</b> is within walking distance of many tourist attractions.<br/>
-            <p>Multiple bus and subway stations put Seoul 53 Hotel in the most accessible location in Seoul.<br/>
-            Our experienced staff will be more than happy to guide your travels.</p>
+            <b>Seoul 53 Hotel Insadong </b><span ng-cloak>{{content.about_body_header}}</span>
+            <br/><br/>
+            <p ng-cloak>{{content.about_body_subheader}}</p>
           </h5>
           <br/>
+          <div id="attractions" class="row container">
+            <div class="col s4">
+              <h5>Shopping</h5>
+              <div class="attraction-feature-div" ng-repeat="attraction in content.shopping_attractions">
+                <img class="attraction-pic materialboxed" width="100%" ng-src={{attraction.image}}>
+                  <b class="attraction-title" ng-cloak>{{attraction.name}}</b>
+                  <i class="attraction-description" ng-cloak>{{attraction.description}}</i>
+                  <a target="_blank" ng-href="{{attraction.link}}">>></a>
+                <br/>
+              </div>
+            </div>
+            <div class="col s4">
+              <h5>Attractions</h5>
+              <div class="attraction-feature-div" ng-repeat="attraction in content.tourist_attractions">
+                <img class="attraction-pic materialboxed" width="100%" ng-src={{attraction.image}}>
+                  <b class="attraction-title" ng-cloak>{{attraction.name}}</b>
+                  <p class="attraction-description" ng-cloak><i>{{attraction.description}}</i></p>
+                  <a target="_blank" ng-href="{{attraction.link}}">>></a>
+                <br/>
+              </div>
+            </div>
+            <div class="col s4">
+              <h5>Restaurants & Markets</h5>
+              <div class="attraction-feature-div" ng-repeat="attraction in content.restaurant_attractions">
+                <img class="attraction-pic materialboxed" width="100%" ng-src={{attraction.image}}>
+                  <b class="attraction-title" ng-cloak>{{attraction.name}}</b>
+                  <i class="attraction-description" ng-cloak>{{attraction.description}}</i>
+                  <a target="_blank" ng-href="{{attraction.link}}">>></a>
+                <br/>
+              </div>
+            </div>
+          </div>
+          <!--
           <div id="attractions" class="container">
             <div class="row">
               <div class="col s5">
@@ -202,222 +340,72 @@ INVESTIGATE:
               </div>
             </div>
           </div>
+          -->
         </div>
 
-        <!-- EXPLORE -->
-        <div ng-show="isSelected(2)">
-          <div id="explore-banner" class="heading-banner">
-              <br/><br/>
-              <h2 class="center">Entire city within fingertips.</h2>
-              <br/><br/>
-              <div class="center" id="lobby-descript">
-                <h5>Less than 10 minutes by walk 3 subway lines and 2 subway stations</h5>
-              </div>
-              <br/><br/><br/>
-          </div>
-          <div id="image-gallery" class="container">
-            <div class="row">
-              <div class="col s5">
-                <img class="materialboxed" width="100%" src="images/explore/dining3.jpg">
-                <p>Dining room by day, bar by night.</p>
-                <br/>
-                <img class="materialboxed" width="100%" src="images/explore/outdoor2.jpg">
-                <p>Night at Seoul 53 Hotel has a unique atmosphere.</p>
-              </div>
-              <div class="col s3">
-                <img class="materialboxed" width="100%" src="images/explore/lobby3.jpg">
-                <p>Our hotel staff will be at the front desk 24/7 to assist with any issues.</p>
-                <img class="materialboxed" width="100%" src="images/explore/outdoor8.jpg" />
-                <br/>
-                <img class="materialboxed" width="100%" src="images/explore/other15.jpg">
-                <p>Enjoy your breakfast or coffee on our outdoor patio.</p>
-              </div>
-              <div class="col s4">
-                <img class="materialboxed" width="100%" src="images/explore/triple1.jpg">
-                <p>Our rooms are cleaned daily and well-managed.</p>
-                <br/><br/>
-                <img class="materialboxed" width="100%" src="images/explore/dining5.jpg">
-                <p>With an interior inspired by modern art galleries, the dining area is a great place to relax.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ROOMS -->
-        <div ng-controller="reservationController" ng-show="isSelected(3)"> 
+        <!-- 3 - ROOMS -->
+        <div ng-show="isSelected(3)"> 
           <div id="rooms-banner" class="heading-banner">
             <br/><br/>
-            <h2 class="center">3 Types of cozy, comfortable rooms.</h2>
+            <h2 class="center" ng-cloak>{{content.rooms_banner_header}}</h2>
             <br/><br/>
-            <div class="center">
-              <h5>Room intro</h5>
+            <div class="center" ng-cloak>
+              <h5>{{content.rooms_banner_subheader}}</h5>
             </div>
             <br/><br/><br/>
           </div>
           <div class="container">
-            <h5 class="center">All our rooms are equipped with: in-room WiFi, TV, water boiler, refrigerator, hair dryer, water and coffee.</h5>
+            <p class="center"><b ng-cloak>{{content.rooms_body_header}}</b></p>
             <br/>
-            <div id="rooms-thumbnails" class="row">
-              <div class="col s4">
-                <a onclick="goToByScroll('room-type-1')"><img class="responsive-img" src="images/rooms/round/double-round.png"/></a>
-                <br/><h5>Double</h5>
-                <p>This is a description of the Double room. I still need to write it before the 21st.</p>
-              </div>
-              <div class="col s4">
-                <a onclick="goToByScroll('room-type-1')"><img class="responsive-img" src="images/rooms/round/twin-round.png"/></a>
-                <br/><h5>Twin</h5>
-                <p>This is a description of the Twin room. I still need to write it before the 21st.</p>
-              </div>
-              <div class="col s4">
-                <a onclick="goToByScroll('room-type-1')"><img class="responsive-img" src="images/rooms/round/triple-round.png"/></a>
-                <br/><h5>Triple</h5>
-                <p>This is a description of the Triple room. I still need to write it before the 21st.</p>
-              </div>
-            </div>
-            <div id="room-type-1" class="row">
-              <div class="col s7">
-                <div class="slider">
-                  <ul class="slides">
-                    <li>
-                      <img src="images/rooms/double-slider/double1.jpg"> <!-- random image -->
-                    </li>
-                    <li>
-                      <img src="images/rooms/double-slider/bath1.jpg"> <!-- random image -->
-                    </li>
-                    <li>
-                      <img src="images/rooms/double-slider/double2.jpg"> <!-- random image -->
-                    </li>
-                  </ul>
+            <div id="rooms">
+              <div class="row" ng-repeat="room_info in content.rooms_info">
+                <div class="col s7">
+                  <div class="slider">
+                    <ul class="slides">
+                      <li ng-repeat="image in room_info.slider_images">
+                        <img ng-src={{image}}>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-              <div class="col s5 room-display">
-                <h4>Double</h4>
-                <ul>
-                  <li>1 double bed (2 guests)</li>
-                  <li>Free Wi-Fi / breakfast</li>
-                  <li>2 bottles mineral water daily</li>
-                  <li>Air conditioner / Hair dryer</li>
-                </ul>
-                <br/><br/>
-                <b>Special Rate</b>    55,000/65,000 won (weekday/weekend)
-                <br/><br/><br/>
-                <button ng-click="selectTab(4)" onclick="goToByScroll('mainContent')" class="btn waves-effect waves-light">
-                  Reserve
-                </button>
-              </div>
-            </div>
-            <div id="room-type-2" class="row">
-              <div class="col s7">
-                <div class="slider">
-                  <ul class="slides">
-                    <li>
-                      <img src="images/rooms/twin-slider/twin1.jpg"> <!-- random image -->
-                      <div class="caption center-align">
-                        <h3></h3>
-                        <h5 class="light grey-text text-lighten-3"></h5>
-                      </div>
-                    </li>
-                    <li>
-                      <img src="images/rooms/twin-slider/twin2.jpg"> <!-- random image -->
-                      <div class="caption left-align">
-                        <h3></h3>
-                        <h5 class="light grey-text text-lighten-3"></h5>
-                      </div>
-                    </li>
-                    <li>
-                      <img src="images/rooms/twin-slider/twin3.jpg"> <!-- random image -->
-                      <div class="caption right-align">
-                        <h3></h3>
-                        <h5 class="light grey-text text-lighten-3"></h5>
-                      </div>
-                    </li>
-                  </ul>
+                <div class="col s5 room-display">
+                  <h4 ng-cloak>{{room_info.name}}</h4>
+                  <div ng-repeat="description in room_info.description">
+                    <p ng-cloak>{{description}}</p>
+                  </div>
+                  <br/>
+                  <p ng-cloak><b>{{content.price}}</b> - {{room_info.price}}</p>
+                  <br/><br/><br/>
+                  <button onclick="$('ul.tabs').tabs('select_tab', 4); goToByScroll('#reserve-form-div');" class="btn waves-effect waves-light" ng-cloak>
+                    {{content.reserve}}
+                  </button>
                 </div>
-              </div>
-              <div class="col s5 room-display">
-                <h4>Twin</h4>
-                <ul>
-                  <li>2 single beds (2 guests)</li>
-                  <li>Free Wi-Fi / breakfast</li>
-                  <li>2 bottles mineral water daily</li>
-                  <li>Air conditioner / Hair dryer</li>
-                </ul>
-                <br/><br/>
-                <b>Special Rate</b>    55,000/65,000 won (weekday/weekend)
-                <br/><br/><br/>
-                <button ng-click="selectTab(4)" onclick="goToByScroll('mainContent')" class="btn waves-effect waves-light">
-                  Reserve
-                </button>
-              </div>
-            </div>
-            <div id="room-type-3" class="row">
-              <div class="col s7">
-                <div class="slider">
-                  <ul class="slides">
-                    <li>
-                      <img src="images/rooms/triple-slider/triple1.jpg"> <!-- random image -->
-                      <div class="caption center-align">
-                        <h3></h3>
-                        <h5 class="light grey-text text-lighten-3"></h5>
-                      </div>
-                    </li>
-                    <li>
-                      <img src="images/rooms/triple-slider/triple2.jpg"> <!-- random image -->
-                      <div class="caption left-align">
-                        <h3></h3>
-                        <h5 class="light grey-text text-lighten-3"></h5>
-                      </div>
-                    </li>
-                    <li>
-                      <img src="images/rooms/triple-slider/triple3.jpg"> <!-- random image -->
-                      <div class="caption right-align">
-                        <h3></h3>
-                        <h5 class="light grey-text text-lighten-3"></h5>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col s5 room-display">
-                <h4>Triple</h4>
-                <ul>
-                  <li>1 double  + 1 single bed (3 guests)</li>
-                  <li>Free Wi-Fi / breakfast</li>
-                  <li>3 bottles mineral water daily</li>
-                  <li>Air conditioner / Hair dryer</li>
-                </ul>
-                <br/><br/>
-                <b>Special Rate</b>    65,000/75,000 won (weekday/weekend)
-                <br/><br/><br/>
-                <button ng-click="selectTab(4)" onclick="goToByScroll('mainContent')" class="btn waves-effect waves-light">
-                  Reserve
-                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- RESERVE -->
-        <div ng-controller="reservationController" ng-show="isSelected(4)">
+        <!-- 4 - RESERVE -->
+        <div ng-show="isSelected(4)">
           <div id="reserve-banner" class="heading-banner">
             <br/><br/>
-            <h2 class="center">Welcome to Seoul 53 Hotel!</h2>
+            <h2 class="center" ng-cloak>{{content.reserve_banner_header}}</h2>
             <br/><br/>
             <div class="center">
-              <h5>Reserve intro</h5>
+              <h5 ng-cloak>{{content.reserve_banner_subheader}}</h5>
             </div>
             <br/><br/><br/>
           </div>
-          <div class="form-style">
+          <div id="reserve-form-div">
             <!-- RESERVE FORM -->
             <!-- site currently uses HTML form validation -->
             <form id="reserve-form" ng-show="!formCompletion.completed && !formCompletion.confirmed" ng-submit="completeForm(reservation)">
-              <h1>Make a Reservation</h1>
-              <input type="text" name="name" placeholder="Your Name" ng-model="reservation.name" required/>
-              <input type="email" name="email" placeholder="Email Address" ng-model="reservation.email" required/>
-              <input type="text" name="phone" placeholder="Phone Number" ng-model="reservation.phone" required/>
-              <input type="text" name="checkin" placeholder="Check In" id="checkin" ng-model="reservation.checkin" required/>
-              <input type="text" name="checkout" placeholder="Check Out" id="checkout" ng-model="reservation.checkout" required/>
+              <h2 ng-cloak>{{content.make_reservation}}</h2>
+              <input type="text" name="name" ng-attr-placeholder={{content.name}} ng-model="reservation.name" required/>
+              <input type="email" name="email" ng-attr-placeholder={{content.email}} ng-model="reservation.email" required/>
+              <input type="text" name="phone" ng-attr-placeholder={{content.phone}} ng-model="reservation.phone" required/>
+              <input type="text" name="checkin" ng-attr-placeholder={{content.checkin}} id="checkin" ng-model="reservation.checkin" required/>
+              <input type="text" name="checkout" ng-attr-placeholder={{content.checkout}} id="checkout" ng-model="reservation.checkout" required/>
               
               <!-- IMAGE SELECT RADIO BUTTON -->
               <!-- SHOUT OUT TO DAVID DIAO -->
@@ -427,92 +415,99 @@ INVESTIGATE:
                     <input type="radio" id="radio1" name="room" value="double" ng-model="reservation.room" checked />
                     <label for="radio1">
                         <img src="images/rooms/round/double-round.png" />
+                        <p class="center" ng-cloak>{{content.rooms_info.double.name}}</p>  
                     </label>
                   </td>
                   <td>
                     <input type="radio" id="radio2" name="room" value="twin" ng-model="reservation.room">
                     <label for="radio2">
                         <img src="images/rooms/round/twin-round.png" />
+                        <p class="center" ng-cloak>{{content.rooms_info.twin.name}}</p>
                     </label>
                   </td>
                   <td>
                     <input type="radio" id="radio3" name="room" value="triple" ng-model="reservation.room">
                     <label for="radio3">
                         <img src="images/rooms/round/triple-round.png" />
+                        <p class="center" ng-cloak>{{content.rooms_info.triple.name}}</p>
                     </label>
                   </td>
                 </tr>
                 <!-- Labels for image select buttons -->
                 <tr>
-                  <td>Double</td>
-                  <td>Twin</td>
-                  <td>Triple</td>
+                  <td ng-cloak>{{content.rooms_double}}</td>
+                  <td ng-cloak>{{content.rooms_twin}}</td>
+                  <td ng-cloak>{{content.rooms_triple}}</td>
                 </tr>
               </table>
 
-              <textarea name="info" placeholder="Additional Information" ng-model="reservation.info"></textarea>
-              <input type="submit" value="Reserve"/>
+              <textarea name="info" ng-attr-placeholder={{content.additional_info}} ng-model="reservation.info"></textarea>
+              <br/><br/><br/>
+              <input type="submit" ng-attr-value="{{content.reserve}}" class="btn"/>
             </form>
 
             <!-- RESERVATION CONFIRM -->
             <div ng-show="formCompletion.completed && !formCompletion.confirmed">
-              <h1>Thank you!</h1>
-              <p>Please confirm your reservation below.</p>
+              <h2 ng-cloak>{{content.reserve_confirm}}</h2>
               <table id="reservation-confirm">
                 <tr>
-                  <td class="reservation-confirm-header">
-                    Name
+                  <td class="reservation-confirm-header" ng-cloak>
+                    {{content.name}}
                   </td>
                   <td>
                     {{reservation.name}}
                   </td>
                 </tr>
                 <tr>
-                  <td class="reservation-confirm-header">
-                    E-mail
+                  <td class="reservation-confirm-header" ng-cloak>
+                    {{content.email}}
                   </td>
                   <td>
                     {{reservation.email}}
                   </td>
                 </tr>
                 <tr>
-                  <td class="reservation-confirm-header">
-                    Phone
+                  <td class="reservation-confirm-header" ng-cloak>
+                    {{content.phone}}
                   </td>
                   <td>
                     {{reservation.phone}}
                   </td>
                 </tr>
                 <tr>
-                  <td class="reservation-confirm-header">
-                    Check-In
+                  <td class="reservation-confirm-header" ng-cloak>
+                    {{content.checkin}}
                   </td>
                   <td>
                     {{reservation.checkin}}
                   </td>
                 </tr>
                 <tr>
-                  <td class="reservation-confirm-header">
-                    Check-Out
+                  <td class="reservation-confirm-header" ng-cloak>
+                    {{content.checkout}}
                   </td>
                   <td>
                     {{reservation.checkout}}
                   </td>
                 </tr>
                 <tr>
-                  <td class="reservation-confirm-header">
-                    Room Type
+                  <td class="reservation-confirm-header" ng-cloak>
+                    {{content.room_type}}
                   </td>
-                  <td style="text-transform: capitalize;">
+                  <td style="text-transform: capitalize;" ng-cloak>
                     {{reservation.room}}
                   </td>
                 </tr>
                 <tr>
                   <td style="text-align: right;">
-                    <button class="btn btn-primary" ng-click="uncompleteForm()">Edit</button>
+                    <button class="btn btn-primary" ng-click="uncompleteForm()" ng-cloak>
+                      {{content.edit}}
+                    </button>
                   </td>
                   <td>
-                    <button class="btn btn-primary" ng-click="submitForm(reservation)">Submit</button>
+                    <button class="btn btn-primary" ng-click="submitForm(reservation)" ng-cloak>
+                      {{content.submit}}
+                    </button>
                   </td>
                 </tr>
               </table>
@@ -520,25 +515,98 @@ INVESTIGATE:
 
             <!-- RESERVATION SUBMITTED (POST CONFIRMATION)-->
             <div ng-show="formCompletion.completed && formCompletion.confirmed">
-              <h1>Reservation Submitted</h1>
-              <p>Thank you for staying with Seoul 53 Hotel! We will send you a confirmation e-mail soon.</p>
-              <button class="btn btn-primary" ng-click="resetReservation()">Back to Home</button>
+              <h1 ng-cloak>{{content.thank_you}}</h1>
+              <p ng-cloak>{{content.reserve_submitted_message}}</p>
+              <button class="btn btn-primary center" onclick="$('ul.tabs').tabs('init');" ng-click="resetReservation()" ng-cloak>{{content.back_to_home}}</button>
               <!-- <pre>{{reservation | json}} </pre> -->
             </div>
           </div>
         </div>
 
-        <!-- FIND US -->
+        <!-- 5 - FIND US -->
         <div ng-show="isSelected(5)"> 
-          <p class = "center"> {{content.find_us_intro}} </p>
-          <div id="maps" class="center container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.155464049971!2d126.9871789500211!3d37.57495673130596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2e8f664957f%3A0x47b020dad419d4c2!2z7ISc7Jq4NTPtmLjthZQ!5e0!3m2!1sen!2sus!4v1474004159032" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-            <img src="images/directions.jpg" />
+          <div class="center">
+            <br/>
+            <h5 style="font-family: 'Oseong', sans-serif;">
+                서울53호텔 인사동 // Seoul 53 Hotel Insadong
+            </h5>
+            <br/>
+            <p style="font-family: 'Oseong', sans-serif;">서울특별시 종로구 돈화문로 11나길 53 (종로구 익선동 53번지)</p>
+            <p style="font-family: 'Raleway', sans-serif;">53 Donhwamun-ro 11na-gil, Jongno-gu, Seoul</p>
+            <p style="font-family: 'Raleway', sans-serif;">Phone Number: 82.2.763.3833</p>
+            <p>
+              <b ng-cloak>{{content.find_us_lost}}</b> <span ng-cloak>{{content.find_us_lost_prompt}}</span>
+              <a href onclick="goToByScroll('#directions-banner')" ng-cloak>
+                {{content.find_us_lost_directions}}
+              </a>
+            </p>
+            <br/>
+          </div>
+          <div id="map" class="center container row">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.155464049971!2d126.9871789500211!3d37.57495673130596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2e8f664957f%3A0x47b020dad419d4c2!2z7ISc7Jq4NTPtmLjthZQ!5e0!3m2!1sen!2sus!4v1474004159032" width="60%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+          </div>
+          <div class="row container center">
+            <img id="directions-image" src="images/directions.jpg" class="materialboxed center" style="display: initial;"/>
+          </div>
+          <div id="directions-banner" class="heading-banner center white-text">
+            <br/><br/>
+            <h2>Directions</h2>
+            <br/>
+              <h5>
+                <a href class="directions-airport-link" onclick="goToByScroll('#incheon-directions')" ng-cloak>{{content.incheon}}</a> 
+                <a href class="directions-airport-link" onclick="goToByScroll('#gimpo-directions')" ng-cloak>{{content.gimpo}}</a>
+              </h5>
+            <br/>
+          </div>
+          <div id="incheon-directions" class="container">
+            <h1 ng-cloak>{{content.incheon}}</h1>
+            <div class="direction row" ng-repeat="direction in content.incheon_directions">
+              <div class="col s6">
+                <img ng-src="{{direction.image}}"/>
+              </div>
+              <div class="col s6 direction-text">
+                <p ng-cloak><b>{{direction.number}}</b> - {{direction.direction}}</p>
+              </div>
+            </div>
+          </div>
+          <div id="gimpo-directions" class="container">
+            <h1 ng-cloak>{{content.gimpo}}</h1>
+            <a class="btn" onclick="goToByScroll('#toprow');" style="margin: 10px;">Back to Top</a>
+            <div class="direction row" ng-repeat="direction in content.gimpo_directions">
+                <div class="directions-image col s7 ">
+                  <img ng-src="{{direction.image}}"/>
+                </div>
+                <div class="col s4">
+                  <p ng-cloak><b>{{direction.number}}</b> - {{direction.direction}}</p>
+                </div>
+            </div>
           </div>
         </div>
       </div>
-    </section> 
     <footer>
+      <a class="btn" onclick="goToByScroll('#toprow');" style="margin: 0 auto">Back to Top</a>
+      <div id="footer">
+        <div id="footer-row-1" class="row">
+          <div class="col s4">
+            <h5>서울53호텔 인사동</h5>
+            <h5>Seoul 53 Hotel Insadong</h5>
+          </div>
+          <div class="col s5" style="border-left: 1px dotted grey;">
+            <p style="font-family: 'Oseong', sans-serif;">서울특별시 종로구 돈화문로 11나길 53 (종로구 익선동 53번지)</p>
+            <p style="font-family: 'Oseong', sans-serif;">53 Donhwamun-ro 11na-gil, Jongno-gu, Seoul</p>
+          </div>
+          <div class="col s3" style="border-left: 1px dotted grey;">
+            <p>Phone Number: 82.2.763.3833</p>
+            <p>Email: 53hotelseoul@gmail.com</p>  
+          </div>
+        </div>
+        <hr style="border-top:1px dotted grey; width: 100%;">
+        <div id="footer-row-2">
+          <p><i>© Seoul 53 Hotel 2016</i></p>
+          <p style="margin-bottom: 0;">Made <i style="color: red;" class="tiny material-icons">volume_up</i> by Sean Park</p>
+        </div>
+    </div>
+    <div id="liner"></div>
     </footer>
   </body>
 </html>

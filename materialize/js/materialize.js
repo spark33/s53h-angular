@@ -1315,8 +1315,17 @@ $(document).ready(function(){
     });
 
     },
-    select_tab : function( id ) {
-      this.find('a[href="#' + id + '"]').trigger('click');
+    select_tab : function( newTab ) {
+      var button;
+      if(newTab == 0) button = "home-button";
+      else if(newTab == 1) button = "about-nav-button";
+      else if(newTab == 2) button = "explore-nav-button";
+      else if(newTab == 3) button = "rooms-nav-button";
+      else if(newTab == 4) button = "reserve-nav-button";
+      else if(newTab == 5) button = "find-us-nav-button";
+      $target = 'a[id=' + button + ']';
+      //console.log($target);
+      this.find($target).trigger('click');
     }
   };
 

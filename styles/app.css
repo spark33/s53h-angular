@@ -1,0 +1,536 @@
+
+/* GENERAL STYLES */
+
+h1, h2, h3
+{
+    font-variant: small-caps;
+}
+
+h1
+{
+    font-size: calc(12px + 3.5vw);;
+}
+
+h2
+{
+    font-size: calc(12px + 2vw);
+}
+
+h3
+{
+    font-size: calc(12px + 1.7vw);
+}
+
+h4
+{
+    font-size: calc(12px + 1.5vw);
+}
+
+h5
+{
+    font-weight: bold;
+    font-size: calc(12px + 1.1vw);
+}
+
+a, p
+{
+    font-size: calc(12px + 0.2vw);
+}
+
+#logo
+{
+    width: 100%;
+    min-width: 200px;
+    max-width: 400px;
+    vertical-align: top;
+}
+
+
+/* LANGUAGE SELECTOR */
+
+#language-div
+{
+    background: linear-gradient(
+                     rgba(0,0,0, .04), 
+                     rgba(0,0,0, .04));
+}
+
+#language-div > div
+{
+    padding-right: 1%;
+    padding-bottom: -1%;
+    vertical-align: bottom;
+}
+
+
+.language-select-tab > .active
+{
+    box-shadow: 0 0 10px #26a69a;
+}
+
+/* NAVIGATION BAR STYLES */
+
+#toprow
+{
+    margin-bottom: 0;
+}
+
+.tab > a
+{
+    font-size: 0.8em;
+}
+
+/* BANNER STYLES */
+
+.heading-banner
+{
+	width: 100%;
+	font-family: 'Montserrat', sans-serif;
+	color: white;
+	background-attachment: fixed;
+	margin: 2% 0 3% 0;
+}
+
+#about-us-banner
+{
+	background: linear-gradient(
+                     rgba(20,20,20, .5), 
+                     rgba(20,20,20, .5)),
+                     url(../images/about-slider/main-1.jpg);
+    background-attachment: fixed;
+    background-position: 0 50%;
+    background-size: 100%;
+}
+
+#rooms-banner
+{
+	background: linear-gradient(
+                     rgba(20,20,20, .5), 
+                     rgba(20,20,20, .5)),
+                     url(../images/other15.jpg);
+    background-attachment: fixed;
+    background-position: 0 50%;
+    background-size: 100%;
+}
+
+#reserve-banner
+{
+	background: linear-gradient(
+                     rgba(20,20,20, .5), 
+                     rgba(20,20,20, .5)),
+                     url(../images/other16.jpg);
+    background-attachment: fixed;
+    background-position: 0 20%;
+    background-size: 100%;
+}
+
+#directions-banner
+{
+    background: linear-gradient(
+                     rgba(20,20,20, .5), 
+                     rgba(20,20,20, .5)),
+                     url(../images/explore/outdoor8.jpg);
+    background-attachment: fixed;
+    background-position: 0 50%;
+    background-size: 100%;
+}
+
+/* HOME PAGE STYLES */
+
+#home
+{
+    background: linear-gradient(
+                     rgba(20,20,20, .7), 
+                     rgba(20,20,20, .7)),
+                     url(../images/home-bg.jpg);
+    background-size: 100%;
+    background-position: 0 50%;
+    background-attachment: fixed;
+    color: white;
+    text-align: center;
+    padding: 100px;
+}
+
+#home-booker
+{
+    width: 60%;
+    margin: 0 auto;
+    /* border-bottom: 1px solid white; */
+    padding: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#home-booker > form
+{
+    margin: 0;
+    text-align: center;
+}
+
+#home-booker td
+{
+    padding: 0;
+    color: white;
+}
+
+#home-checkin, #home-checkout
+{
+    margin: 0;
+    color: #d1d1d1;
+    padding: 5px;
+    font-family: 'Oseong', sans-serif;
+    border-bottom: 1px solid white;
+}
+
+#home-reserve > a
+{
+    width: 100%;
+}
+
+.home-reserve-arrow
+{
+    font-family:'Montserrat', sans-serif;
+    width: 40px;
+    text-align: left;
+}
+
+#image-gallery
+{
+    margin: 3%;
+}
+
+/* ABOUT US PAGE STYLES */
+
+#about-us > p
+{
+    margin-right: 50px;
+    text-align: justify;
+}
+
+.attraction-pic
+{
+    height: 200px;
+}
+
+.attraction-feature-div
+{
+    margin-bottom: 20px;
+}
+
+.attraction-title
+{
+    font-family: 'Oseong', sans-serif;
+    font-weight: 900;
+}
+
+.attraction-description
+{
+    font-family: 'Oseong', sans-serif;
+    display: inline;
+    font-variant: small-caps;
+}
+
+/* ROOMS PAGE STYLES */
+
+#rooms-thumbnails
+{
+    text-align: center;
+}
+
+/* SCROLL BUTTON STYLING */
+
+#scroll-button
+{
+	position: fixed; bottom: 10%; z-index: 999;
+}
+
+/* RESERVE FORM STYLING */
+
+#reserve-form-div
+{
+    background: linear-gradient(
+                     rgba(20,20,20, .7), 
+                     rgba(20,20,20, .7)),
+                     url(../images/explore/dining3.jpg);
+    background-size: 100%;
+    background-attachment: fixed;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 1.5% 3% 1.5% 3%;
+    border-radius: 20px;
+    color: white;
+    text-align: center;
+}
+
+#reserve-form
+{
+    margin: 40px;
+}
+
+#reserve-form
+input, textarea
+{
+    background: white;
+    height: 5px;
+    border-radius: 5px;
+    width: 70%;
+    padding: 3%;
+    margin: 15 auto;
+    color: grey;
+    font-size: calc(9px + 0.7vw);
+    font-family: 'Oseong', sans-serif;
+}
+
+#reserve-form
+textarea
+{
+    width: 90%;
+    height: 200px;
+}
+
+#reserve-form
+input[type="submit"]
+{
+    background-color: #26a69a;
+    width: 90%;
+    color: white;
+    padding: 20 0 50 0;
+}
+
+.room-select
+{
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.room-select
+label
+{
+    color: white;
+}
+
+/* dirty solution to prevent calendar from overflowing div. */
+.form-datepicker
+td a
+{
+    font-size: 13;
+}
+
+/* FORM : ROOM SELECT  */
+input[type="radio"]
+{
+    display:none;
+}
+.room-select > tbody > tr > td
+{
+    text-align: center;
+}
+
+.room-select > tbody > tr > td > label,
+.room-select > tbody > tr > td > label > img
+{
+    display:inline-block;
+    max-width: 300px;
+    /* height set by jQuery for mobile responsiveness */
+    border-radius:50%;
+    margin:1px;
+}
+
+.room-select > tbody > tr > td > label > img
+{
+    width: 99%;
+}
+
+.room-select > tbody > tr > td > label
+{
+    width: 80%;
+}
+
+.room-select
+input[type=radio]:checked + label > img
+{
+    background-color:#e0e0e0;
+    box-shadow: 0 0 5px #26a69a;
+    border: 2px solid #219187;
+}
+
+.room-select
+input[type=radio]:checked + label > p
+{
+    font-weight: bold;
+}
+
+#reservation-confirm
+{
+    margin: auto;
+    color: white;
+    font-family: 'Oseong', sans-serif;
+}
+
+#reservation-confirm
+tr > td
+{
+    width: 50%;
+    padding: 15px;
+}
+
+.reservation-confirm-header
+{
+    border-right: 1px solid white;
+    text-align: right;
+}
+
+/* FIND US PAGE STYLES */
+
+.direction
+div
+{
+    padding: 5%;
+}
+
+.direction > div > img
+{
+    max-width: 90%;
+}
+
+.direction-text
+{
+    text-align: justify;
+    padding-right: 15% !important;
+}
+
+.directions-airport-link
+{
+    color: white;
+}
+
+.directions-airport-link:hover
+{
+    color: #26a69a;
+}
+
+/* FOOTER STYLES */
+
+footer
+{
+    /* for back to top button */
+    margin-top: 50px;
+    text-align: center;
+}
+
+#footer
+{
+    background: linear-gradient(
+                     rgba(0,0,0, .04), 
+                     rgba(0,0,0, .04));
+    margin-top: 30px;
+    margin-bottom: 0;
+    padding: 3%;
+    padding-bottom: 20px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+#footer-row-1
+{
+    text-align: left;
+}
+
+#liner
+{
+    background: linear-gradient(
+                     rgba(38,166,154,1), 
+                     rgba(38,166,154,1));
+    padding: 0.5%;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+@media screen and (max-width:700px){
+
+    html
+    {
+        margin: 0 auto;
+        text-align: center;
+        float: center;
+    }
+
+	.row .col
+	{
+		width: 100% !important;
+        margin: 0 auto;
+        text-align: center;
+        border: none !important;
+	}
+
+    #reserve-form
+    input, textarea
+    {
+        width: 90%;
+    }
+
+    .directions-image > img
+    {
+        max-width: 90%;
+    }
+
+    .direction-text
+    {
+        padding: 0;
+    }
+
+    #map > iframe
+    {
+        width: 90%;
+    }
+
+    #about-us > p
+    {
+        margin-right: 0px;
+        text-align: center;
+    }
+
+    #language-div > div
+    {
+        text-align: center;
+
+    }
+
+	#rooms-thumbnails
+	{
+		display: none;
+	}
+
+    #home
+    {
+        padding: 50px;
+    }
+
+    #home-booker
+    {
+        text-align: center;
+        border: none;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    #home-booker table
+    {
+        width: 100%;
+    }
+
+    #home-booker td,
+    #home-booker input
+    {
+        padding: 0;
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+
+    #home-reserve
+    {
+        margin-top: 30px;
+    }
+
+}

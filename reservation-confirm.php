@@ -17,6 +17,8 @@
   $message = $message . "Check-in: " . $checkin . "\n" . "Check-out: " . $checkout . ".\n\n";
   $message = $message . "Email: " . $email . "\nPhone: " . $phone;
 
+  $email = "seanpark1107@gmail.com";
+
   // mail("seanpark1107@gmail.com", $subject, $message);
   echo $subject . "/n" . $message;
 
